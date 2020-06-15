@@ -39,10 +39,8 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10)
-      ),
-      margin: EdgeInsets.only( top: 10, left: 15, right: 15 ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Row(

@@ -48,80 +48,87 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: Column(
-        children: <Widget>[
-          TitleHeading( 'Add new expense' ),
-          SizedBox(height: 20),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Title',
-              filled: true,
-              border: new OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(30),
-                ),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            controller: titleInputController,
-          ),
-          SizedBox(height: 20),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Amount',
-              filled: true,
-              border: new OutlineInputBorder(
+    return SingleChildScrollView(
+          child: Container(
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10
+        ),
+        child: Column(
+          children: <Widget>[
+            TitleHeading('Add new expense'),
+            SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Title',
+                filled: true,
+                border: new OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(30),
                   ),
-                  borderSide: BorderSide.none),
-            ),
-            controller: amountInputController,
-            keyboardType: TextInputType.number,
-            onSubmitted: (_) => {submitData()},
-          ),
-          SizedBox(height: 10),
-          Container(
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  selectedDate == null
-                      ? 'No date chosen'
-                      : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  borderSide: BorderSide.none,
                 ),
-                FlatButton(
-                  color: Colors.indigoAccent,
-                  onPressed: _presentDatePicker,
-                  child: Text(
-                    'Choose date',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              controller: titleInputController,
+            ),
+            SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Amount',
+                filled: true,
+                border: new OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                    borderSide: BorderSide.none),
+              ),
+              controller: amountInputController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => {submitData()},
+            ),
+            SizedBox(height: 10),
+            Container(
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    selectedDate == null
+                        ? 'No date chosen'
+                        : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                  FlatButton(
+                    color: Colors.indigoAccent,
+                    onPressed: _presentDatePicker,
+                    child: Text(
+                      'Choose date',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          RaisedButton(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Text(
-                'Add',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-              color: Colors.indigoAccent,
-              onPressed: submitData),
-        ],
+            SizedBox(height: 10),
+            RaisedButton(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Text(
+                  'Add',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+                color: Colors.indigoAccent,
+                onPressed: submitData),
+          ],
+        ),
       ),
     );
   }
