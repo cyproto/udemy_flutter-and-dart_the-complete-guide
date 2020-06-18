@@ -82,6 +82,69 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> _buildLandscapeContent(
+      MediaQueryData mediaQuery, AppBar appBar, tranxList) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text('Show chart'),
+          Switch.adaptive(
+            value: _showChart,
+            onChanged: (val) {
+              setState(() {
+                _showChart = val;
+              });
+            },
+          )
+        ],
+      ),
+      _showChart
+          ? Column(
+              children: <Widget>[
+                Container(
+                    height: (mediaQuery.size.height -
+                            appBar.preferredSize.height -
+                            mediaQuery.padding.top) *
+                        0.2,
+                    child: const TitleHeading('Overview')),
+                Container(
+                  height: (mediaQuery.size.height -
+                          appBar.preferredSize.height -
+                          mediaQuery.padding.top) *
+                      0.6,
+                  child: Chart(_recentTransactions),
+                ),
+              ],
+            )
+          : tranxList
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(
+      MediaQueryData mediaQuery, AppBar appBar, tranxList) {
+    return [
+      Column(
+        children: <Widget>[
+          Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.1,
+              child: const TitleHeading('Overview')),
+          Container(
+            height: (mediaQuery.size.height -
+                    appBar.preferredSize.height -
+                    mediaQuery.padding.top) *
+                0.3,
+            child: Chart(_recentTransactions),
+          ),
+        ],
+      ),
+      tranxList
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -134,59 +197,17 @@ class _MyHomePageState extends State<MyHomePage> {
           //mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             if (isLandScape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('Show chart'),
-                  Switch.adaptive(
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    },
-                  )
-                ],
+              ..._buildLandscapeContent(
+                mediaQuery,
+                appBar,
+                tranxList,
               ),
             if (!isLandScape)
-              Column(
-                children: <Widget>[
-                  Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.1,
-                      child: const TitleHeading('Overview')),
-                  Container(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.3,
-                    child: Chart(_recentTransactions),
-                  ),
-                ],
+              ..._buildPortraitContent(
+                mediaQuery,
+                appBar,
+                tranxList,
               ),
-            if (!isLandScape) tranxList,
-            if (isLandScape)
-              _showChart
-                  ? Column(
-                      children: <Widget>[
-                        Container(
-                            height: (mediaQuery.size.height -
-                                    appBar.preferredSize.height -
-                                    mediaQuery.padding.top) *
-                                0.2,
-                            child: const TitleHeading('Overview')),
-                        Container(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.6,
-                          child: Chart(_recentTransactions),
-                        ),
-                      ],
-                    )
-                  : tranxList
           ],
         ),
       ),
