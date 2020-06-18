@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text('Budget App'),
+            middle: const Text('Budget App'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -102,10 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : AppBar(
-            title: Text('Budget App'),
+            title: const Text('Budget App'),
             actions: <Widget>[
               IconButton(
-                  icon: Icon(Icons.add_circle),
+                  icon: const Icon(Icons.add_circle),
                   onPressed: () => _startAddNewTranx(context))
             ],
           );
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     appBar.preferredSize.height -
                     mediaQuery.padding.top) *
                 0.1,
-            child: TitleHeading('My expenses')),
+            child: const TitleHeading('My expenses')),
         Container(
           height: (mediaQuery.size.height -
                   appBar.preferredSize.height -
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Show chart'),
+                  const Text('Show chart'),
                   Switch.adaptive(
                     value: _showChart,
                     onChanged: (val) {
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               appBar.preferredSize.height -
                               mediaQuery.padding.top) *
                           0.1,
-                      child: TitleHeading('Overview')),
+                      child: const TitleHeading('Overview')),
                   Container(
                     height: (mediaQuery.size.height -
                             appBar.preferredSize.height -
@@ -176,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     appBar.preferredSize.height -
                                     mediaQuery.padding.top) *
                                 0.2,
-                            child: TitleHeading('Overview')),
+                            child: const TitleHeading('Overview')),
                         Container(
                           height: (mediaQuery.size.height -
                                   appBar.preferredSize.height -
@@ -201,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
             body: pageBody,
             floatingActionButton: Platform.isAndroid
                 ? FloatingActionButton(
-                    child: Icon(Icons.add_circle),
+                    child: const Icon(Icons.add_circle),
                     onPressed: () => _startAddNewTranx(context))
                 : Container(),
           );

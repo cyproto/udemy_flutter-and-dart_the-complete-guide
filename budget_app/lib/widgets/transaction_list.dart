@@ -16,7 +16,7 @@ class TransactionList extends StatelessWidget {
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
+                const Text(
                   'No Expenses',
                   style: TextStyle(fontSize: 30),
                 ),
@@ -33,7 +33,7 @@ class TransactionList extends StatelessWidget {
                     leading: CircleAvatar(
                       radius: 30,
                       child: Padding(
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: FittedBox(
                           child: Text(
                             '\$${transaction[index].amount}',
@@ -46,7 +46,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     title: Text(
                       transaction[index].title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.cyan,
                         fontWeight: FontWeight.bold,
@@ -54,19 +54,19 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       DateFormat.yMMMMd().format(transaction[index].date),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 10,
                         color: Colors.grey,
                       ),
                     ),
                     trailing: MediaQuery.of(context).size.width > 400
                         ? FlatButton.icon(
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             textColor: Colors.redAccent,
-                            label: Text('Delete'),
+                            label: const Text('Delete'),
                             onPressed: () => deleteTranx(transaction[index].id))
                         : IconButton(
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             color: Colors.redAccent,
                             onPressed: () => deleteTranx(transaction[index].id),
                           ),

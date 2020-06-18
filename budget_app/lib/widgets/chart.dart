@@ -40,9 +40,9 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.only(top: 10, left: 15, right: 15),
+      margin: const EdgeInsets.only(top: 10, left: 15, right: 15),
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTranasactions.map((data) {

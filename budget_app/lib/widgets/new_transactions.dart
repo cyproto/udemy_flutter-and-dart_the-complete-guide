@@ -58,8 +58,8 @@ class _NewTransactionState extends State<NewTransaction> {
         ),
         child: Column(
           children: <Widget>[
-            TitleHeading('Add new expense'),
-            SizedBox(height: 20),
+            const TitleHeading('Add new expense'),
+            const SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Title',
@@ -73,7 +73,7 @@ class _NewTransactionState extends State<NewTransaction> {
               ),
               controller: titleInputController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Amount',
@@ -88,7 +88,7 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => {submitData()},
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               height: 80,
               child: Row(
@@ -98,12 +98,12 @@ class _NewTransactionState extends State<NewTransaction> {
                     selectedDate == null
                         ? 'No date chosen'
                         : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   FlatButton(
                     color: Colors.indigoAccent,
                     onPressed: _presentDatePicker,
-                    child: Text(
+                    child: const Text(
                       'Choose date',
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
@@ -114,11 +114,11 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             SizedBox(height: 10),
             RaisedButton(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: Text(
+                child: const Text(
                   'Add',
                   style: TextStyle(
                       color: Colors.white,

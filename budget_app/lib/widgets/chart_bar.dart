@@ -15,7 +15,7 @@ class ChartBar extends StatelessWidget {
           height: constraints.maxHeight * 0.15,
           child: Text(
             '\$${spendingAmount.toStringAsFixed(2)}',
-            style: TextStyle(fontSize: 10),
+            style: const TextStyle(fontSize: 10),
           ),
         ),
         SizedBox(height: constraints.maxHeight * 0.05),
