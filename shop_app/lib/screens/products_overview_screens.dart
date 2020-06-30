@@ -46,15 +46,12 @@ class ProductsOverviewScreen extends StatelessWidget {
         title: Text('Shop App'),
       ),
       body: GridView.builder(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
         itemCount: loadedProducts.length,
         itemBuilder: (context, index) => ProductItem(loadedProducts[index].id,
             loadedProducts[index].title, loadedProducts[index].imageUrl),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
         ),
       ),
     );
