@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import './screens/product_details_screen.dart';
 import './screens/products_overview_screens.dart';
+import './screens/cart_screen.dart';
 import './providers/products.dart';
 import './providers/cart.dart';
 
@@ -35,12 +36,23 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 10,
                 ),
+                headline4: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+                headline6: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: ProductsOverviewScreen(),
         routes: {
           ProductDetailsScreen.route: (context) => ProductDetailsScreen(),
+          CartScreen.route: (context) => CartScreen(),
         },
       ),
     );
