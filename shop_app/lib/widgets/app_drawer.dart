@@ -20,7 +20,6 @@ class AppDrawer extends StatelessWidget {
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.shop),
             title: Text(
@@ -31,7 +30,9 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/');
             },
           ),
-          Divider(),
+          Divider(
+            height: 0,
+          ),
           ListTile(
             leading: Icon(Icons.payment),
             title: Text(
@@ -42,7 +43,9 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(OrdersScreen.route);
             },
           ),
-          Divider(),
+          Divider(
+            height: 0,
+          ),
           ListTile(
             leading: Icon(Icons.edit),
             title: Text(
