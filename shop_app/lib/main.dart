@@ -36,45 +36,46 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Orders(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          accentColor: Colors.redAccent,
-          fontFamily: 'Montserrat',
-          textTheme: ThemeData.light().textTheme.copyWith(
-                bodyText1: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 10,
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            accentColor: Colors.redAccent,
+            fontFamily: 'Montserrat',
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  bodyText1: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                  ),
+                  headline4: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                  headline6: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                  headline1: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 60,
+                  ),
                 ),
-                headline4: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-                headline6: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-                headline1: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 60,
-                ),
-              ),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: auth.isAuth ? ProductsOverviewScreen() : AuthScreen(),
+          routes: {
+            ProductDetailsScreen.route: (context) => ProductDetailsScreen(),
+            CartScreen.route: (context) => CartScreen(),
+            OrdersScreen.route: (context) => OrdersScreen(),
+            UserProductsScreen.route: (context) => UserProductsScreen(),
+            EditProductScreen.route: (context) => EditProductScreen(),
+          },
         ),
-        home: AuthScreen(),
-        routes: {
-          ProductsOverviewScreen.route: (context) => ProductsOverviewScreen(),
-          ProductDetailsScreen.route: (context) => ProductDetailsScreen(),
-          CartScreen.route: (context) => CartScreen(),
-          OrdersScreen.route: (context) => OrdersScreen(),
-          UserProductsScreen.route: (context) => UserProductsScreen(),
-          EditProductScreen.route: (context) => EditProductScreen(),
-        },
       ),
     );
   }
