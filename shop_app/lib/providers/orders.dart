@@ -23,8 +23,9 @@ class OrdersItem {
 class Orders with ChangeNotifier {
   List<OrdersItem> _orders = [];
   final String authToken;
+  final String userId;
 
-  Orders(this.authToken, this._orders);
+  Orders(this.authToken, this.userId, this._orders);
 
   List<OrdersItem> get orders {
     return [..._orders];
@@ -32,7 +33,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchAndSetOrders() async {
     final url =
-        'https://udemy-shop-app-72c1c.firebaseio.com/orders.json?auth=$authToken';
+        'https://udemy-shop-app-72c1c.firebaseio.com/orders/$userId.json?auth=$authToken';
     final response = await http.get(url);
     final List<OrdersItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -64,7 +65,7 @@ class Orders with ChangeNotifier {
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     final url =
-        'https://udemy-shop-app-72c1c.firebaseio.com/orders.json?auth=$authToken';
+        'https://udemy-shop-app-72c1c.firebaseio.com/orders/$userId.json?auth=$authToken';
     final timestamp = DateTime.now();
     final response = await http.post(
       url,
