@@ -20,11 +20,12 @@ class Product with ChangeNotifier {
     this.isFavourite = false,
   });
 
-  Future<void> toggleFavouriteStatus() async {
+  Future<void> toggleFavouriteStatus(String token) async {
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
-    final url = 'https://udemy-shop-app-72c1c.firebaseio.com/products/$id.json';
+    final url =
+        'https://udemy-shop-app-72c1c.firebaseio.com/products/$id.json?auth=$token';
     try {
       final response = await http.patch(
         url,
