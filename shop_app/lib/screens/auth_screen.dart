@@ -42,7 +42,10 @@ class AuthScreen extends StatelessWidget {
                     height: 300,
                   ),
                   Expanded(
-                    child: AuthCard(),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: AuthCard(),
+                    ),
                   ),
                 ],
               ),
@@ -63,7 +66,8 @@ class AuthCard extends StatefulWidget {
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
@@ -72,6 +76,22 @@ class _AuthCardState extends State<AuthCard> {
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
+  AnimationController _animationController;
+  Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 500,
+      ),
+    );
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+  }
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -146,90 +166,94 @@ class _AuthCardState extends State<AuthCard> {
       setState(() {
         _authMode = AuthMode.Signup;
       });
+      _animationController.forward();
     } else {
       setState(() {
         _authMode = AuthMode.Login;
       });
+      _animationController.reverse();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
-    return Card(
-      margin: EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(
+    return AnimatedContainer(
+      height: _authMode == AuthMode.Login ? 350 : 400,
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
+        color: Colors.white,
       ),
-      elevation: 8.0,
-      child: Container(
-        padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    hintText: 'E-Mail',
-                    filled: true,
-                    fillColor: Color(0xffdadada),
-                    border: new OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                      borderSide: BorderSide.none,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.elasticInOut,
+      padding: EdgeInsets.only(top: 30, left: 30, right: 30),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.email),
+                  hintText: 'E-Mail',
+                  filled: true,
+                  fillColor: Color(0xffdadada),
+                  border: new OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
                     ),
+                    borderSide: BorderSide.none,
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
-                    }
-                  },
-                  onSaved: (value) {
-                    _authData['email'] = value;
-                  },
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    hintText: 'Password',
-                    filled: true,
-                    fillColor: Color(0xffdadada),
-                    border: new OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30),
-                      ),
-                      borderSide: BorderSide.none,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value.isEmpty || !value.contains('@')) {
+                    return 'Invalid email!';
+                  }
+                },
+                onSaved: (value) {
+                  _authData['email'] = value;
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.lock),
+                  hintText: 'Password',
+                  filled: true,
+                  fillColor: Color(0xffdadada),
+                  border: new OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
                     ),
+                    borderSide: BorderSide.none,
                   ),
-                  obscureText: true,
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
-                    }
-                  },
-                  onSaved: (value) {
-                    _authData['password'] = value;
-                  },
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                if (_authMode == AuthMode.Signup)
-                  TextFormField(
+                obscureText: true,
+                controller: _passwordController,
+                validator: (value) {
+                  if (value.isEmpty || value.length < 5) {
+                    return 'Password is too short!';
+                  }
+                },
+                onSaved: (value) {
+                  _authData['password'] = value;
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              if (_authMode == AuthMode.Signup)
+                FadeTransition(
+                  opacity: _opacityAnimation,
+                  child: TextFormField(
                     enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock),
@@ -252,37 +276,40 @@ class _AuthCardState extends State<AuthCard> {
                           }
                         : null,
                   ),
-                SizedBox(
-                  height: 20,
                 ),
-                if (_isLoading)
-                  CircularProgressIndicator()
-                else
-                  RaisedButton(
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
-                    onPressed: _submit,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
+              SizedBox(
+                height: 20,
+              ),
+              if (_isLoading)
+                CircularProgressIndicator()
+              else
+                RaisedButton(
+                  child:
+                      Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                  onPressed: _submit,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                SizedBox(
-                  height: 10,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                  color: Theme.of(context).primaryColor,
+                  textColor: Theme.of(context).primaryTextTheme.button.color,
                 ),
-                FlatButton(
-                  child: Text(
-                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
-                  onPressed: _switchAuthMode,
-                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  textColor: Theme.of(context).primaryColor,
-                ),
-              ],
-            ),
+              SizedBox(
+                height: 10,
+              ),
+              FlatButton(
+                child: Text(
+                    '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                onPressed: _switchAuthMode,
+                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                textColor: Theme.of(context).primaryColor,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+            ],
           ),
         ),
       ),
