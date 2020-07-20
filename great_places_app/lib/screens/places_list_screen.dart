@@ -49,6 +49,9 @@ class PlacesListScreen extends StatelessWidget {
                               fontSize: 20,
                             ),
                           ),
+                          subtitle: Text(
+                            greatPlaces.items[i].location.address,
+                          ),
                           onTap: () {},
                         ),
                       ),
