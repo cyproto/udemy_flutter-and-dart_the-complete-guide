@@ -8,7 +8,8 @@ class AuthForm extends StatefulWidget {
     bool isLogin,
     BuildContext ctx,
   ) submitFn;
-  AuthForm(this.submitFn);
+  final bool isLoading;
+  AuthForm(this.submitFn, this.isLoading);
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -83,8 +84,8 @@ class _AuthFormState extends State<AuthForm> {
                 TextFormField(
                   key: ValueKey('password'),
                   validator: (value) {
-                    if (value.isEmpty || value.length < 7) {
-                      return 'Password must be atleast 7 chars long';
+                    if (value.isEmpty || value.length < 6) {
+                      return 'Password must be atleast 6 chars long';
                     }
                     return null;
                   },
@@ -99,21 +100,24 @@ class _AuthFormState extends State<AuthForm> {
                 SizedBox(
                   height: 15,
                 ),
-                RaisedButton(
-                  onPressed: _trySubmit,
-                  child: Text(_isLogin ? 'Login' : 'Signup'),
-                ),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  child: Text(_isLogin
-                      ? 'Create an account'
-                      : 'Already have an account'),
-                  onPressed: () {
-                    setState(() {
-                      _isLogin = !_isLogin;
-                    });
-                  },
-                )
+                if (widget.isLoading) CircularProgressIndicator(),
+                if (!widget.isLoading)
+                  RaisedButton(
+                    onPressed: _trySubmit,
+                    child: Text(_isLogin ? 'Login' : 'Signup'),
+                  ),
+                if (!widget.isLoading)
+                  FlatButton(
+                    textColor: Theme.of(context).primaryColor,
+                    child: Text(_isLogin
+                        ? 'Create an account'
+                        : 'Already have an account'),
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                  )
               ],
             ),
           ),
