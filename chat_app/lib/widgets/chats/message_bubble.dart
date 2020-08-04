@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(this.message, this.isCurrentUser, {this.key});
+  MessageBubble(this.message, this.isCurrentUser, this.username, {this.key});
   final String message;
+  final String username;
   final isCurrentUser;
   Key key;
   @override
@@ -34,11 +36,25 @@ class MessageBubble extends StatelessWidget {
             vertical: 4,
             horizontal: 8,
           ),
-          child: Text(
-            message,
-            style: TextStyle(
-              color: isCurrentUser ? Colors.black : Colors.white,
-            ),
+          child: Column(
+            crossAxisAlignment: isCurrentUser
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                username,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isCurrentUser ? Colors.black : Colors.white,
+                ),
+              ),
+              Text(
+                message,
+                style: TextStyle(
+                  color: isCurrentUser ? Colors.black : Colors.white,
+                ),
+              ),
+            ],
           ),
         ),
       ],

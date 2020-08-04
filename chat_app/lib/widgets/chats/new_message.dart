@@ -12,13 +12,16 @@ class _NewMessageState extends State<NewMessage> {
   var _controller = TextEditingController();
 
   void _sendMessage() async {
+    _controller.clear();
     final user = await FirebaseAuth.instance.currentUser();
+    final userData =
+        await Firestore.instance.collection('users').document(user.uid).get();
     Firestore.instance.collection('chat').add({
       'text': enteredMessage,
       'timestamp': Timestamp.now(),
       'userId': user.uid,
+      'username': userData['username'],
     });
-    _controller.clear();
   }
 
   @override
