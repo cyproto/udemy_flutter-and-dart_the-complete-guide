@@ -18,7 +18,9 @@ class Messages extends StatelessWidget {
         return StreamBuilder(
           builder: (ctx, chatSnapshot) {
             if (chatSnapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
             final chatDocs = chatSnapshot.data.documents;
             return ListView.builder(
