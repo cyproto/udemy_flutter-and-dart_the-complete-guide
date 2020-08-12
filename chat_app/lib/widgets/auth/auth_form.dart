@@ -72,6 +72,7 @@ class _AuthFormState extends State<AuthForm> {
               children: <Widget>[
                 if (!_isLogin) UserImagePicker(_pickedImage),
                 TextFormField(
+                  textCapitalization: TextCapitalization.none,
                   key: ValueKey('email'),
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
